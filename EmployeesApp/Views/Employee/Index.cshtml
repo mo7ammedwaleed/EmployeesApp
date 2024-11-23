@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Employee>
+
+<h1>All Employees</h1>
+
+<table class="table table-bordered">
+    <thead>
+		<tr>
+			<th>@Html.DisplayNameFor(Model => Model.EmployeeNumber)</th>
+
+			<th>@Html.DisplayNameFor(Model => Model.EmployeeName)</th>
+		
+			<th>@Html.DisplayNameFor(Model => Model.BirthDate)</th>
+		
+			<th>@Html.DisplayNameFor(Model => Model.HiringDate)</th>
+		
+			<th>@Html.DisplayNameFor(Model => Model.GrossSalary)</th>
+		
+			<th>@Html.DisplayNameFor(Model => Model.NetSalary)</th>
+		
+			<th>@Html.DisplayNameFor(Model => Model.DepartmentName)</th>
+		</tr>
+    </thead>
+	<tbody>
+		@foreach(var emp in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelitem => emp.EmployeeNumber)
+				</td>
+				<td>
+					@Html.DisplayFor(modelitem => emp.EmployeeName)
+				</td>
+				
+				<td>
+					@Html.DisplayFor(modelitem => emp.BirthDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelitem => emp.HiringDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelitem => emp.GrossSalary)
+				</td>
+				<td>
+					@Html.DisplayFor(modelitem => emp.NetSalary)
+				</td>
+				<td>
+					@Html.DisplayFor(modelitem => emp.DepartmentName)
+				</td>
+				<td>
+					@Html.ActionLink("Edit","Edit",new {id = emp.EmployeeId})
+					@Html.ActionLink("Delete", "Delete", new { id = emp.EmployeeId })
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
