@@ -9,7 +9,22 @@ namespace EmployeesApp.Controllers
         private ApplicationDbContext _context = new ApplicationDbContext();
         public IActionResult Index()
         {
-            List<Employee> employees = _context.Employees.ToList();
+            var employees = (from employee in _context.Employees
+                             join department in _context.Departments
+                             on employee.DepartmentId equals department.DepartmentId
+                             select new Employee
+                             {
+                                 EmployeeId = employee.EmployeeId,
+                                 EmployeeName = employee.EmployeeName,
+                                 EmployeeNumber = employee.EmployeeNumber,
+                                 BirthDate = employee.BirthDate,
+                                 HiringDate = employee.HiringDate,
+                                 GrossSalary = employee.GrossSalary,
+                                 NetSalary = employee.NetSalary,
+                                 DepartmentId = employee.DepartmentId,
+                                 DepartmentName = department.DepartmentName,
+                             }).ToList();
+
             return View(employees);
         }
 
