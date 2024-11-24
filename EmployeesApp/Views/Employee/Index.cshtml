@@ -1,8 +1,16 @@
-﻿@model IEnumerable<Employee>
+﻿@{
+	ViewData["Title"] = "All Employees";
+}
+
+@model IEnumerable<Employee>
 
 <h1>All Employees</h1>
 
-<table class="table table-bordered">
+<hr />
+
+<a asp-action="Create" class="btn btn-primary">Create New Employee</a>
+
+<table class="table">
     <thead>
 		<tr>
 			<th>@Html.DisplayNameFor(Model => Model.EmployeeNumber)</th>
