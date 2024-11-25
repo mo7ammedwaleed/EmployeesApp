@@ -14,17 +14,29 @@
 		<tr>
 			<th>@Html.DisplayNameFor(Model => Model.EmployeeNumber)</th>
 
-			<th>@Html.DisplayNameFor(Model => Model.EmployeeName)</th>
+			<th>
+				@Html.ActionLink("Employee Name","Index",new {sortField = "EmployeeName",currentSortField = ViewBag.SortField,sortDirection = ViewBag.SortDirection})
+			</th>
 		
-			<th>@Html.DisplayNameFor(Model => Model.BirthDate)</th>
+			<th>
+				@Html.ActionLink("Birth Date", "Index", new { sortField = "BirthDate", currentSortField = ViewBag.SortField, sortDirection = ViewBag.SortDirection })
+			</th>
 		
-			<th>@Html.DisplayNameFor(Model => Model.HiringDate)</th>
+			<th>
+				@Html.ActionLink("Hiring Date", "Index", new { sortField = "HiringDate", currentSortField = ViewBag.SortField, sortDirection = ViewBag.SortDirection })
+			</th>
 		
-			<th>@Html.DisplayNameFor(Model => Model.GrossSalary)</th>
+			<th>
+				@Html.ActionLink("Gross Salary", "Index", new { sortField = "GrossSalary", currentSortField = ViewBag.SortField, sortDirection = ViewBag.SortDirection })
+			</th>
 		
-			<th>@Html.DisplayNameFor(Model => Model.NetSalary)</th>
+			<th>
+				@Html.ActionLink("Net Salary", "Index", new { sortField = "NetSalary", currentSortField = ViewBag.SortField, sortDirection = ViewBag.SortDirection })
+			</th>
 		
-			<th>@Html.DisplayNameFor(Model => Model.DepartmentName)</th>
+			<th>
+				@Html.ActionLink("Department", "Index", new { sortField = "DepartmentName", currentSortField = ViewBag.SortField, sortDirection = ViewBag.SortDirection })
+			</th>
 		</tr>
     </thead>
 	<tbody>
@@ -55,7 +67,7 @@
 				</td>
 				<td>
 					@Html.ActionLink("Edit","Edit",new {id = emp.EmployeeId})
-					@Html.ActionLink("Delete", "Delete", new { id = emp.EmployeeId })
+					@Html.ActionLink("Delete", "Delete", new { id = emp.EmployeeId }, new {onclick = "return confirm('Are you sure you want to delete this employee?')"})
 				</td>
 			</tr>
 		}

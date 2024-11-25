@@ -4,10 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeesApp.Controllers
 {
+    public enum SortDirection
+    {
+        Ascending,
+        Descending
+    }
     public class EmployeeController : Controller
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        public IActionResult Index(string sortField, string currentSortField, SortDirection sortDirection)
+        {
+            var employees = GetEmployees();
+            return View(this.SortEmployees(employees, sortField, currentSortField, sortDirection));
+        }
+
+        private List<Employee> GetEmployees()
         {
             var employees = (from employee in _context.Employees
                              join department in _context.Departments
@@ -25,7 +36,7 @@ namespace EmployeesApp.Controllers
                                  DepartmentName = department.DepartmentName,
                              }).ToList();
 
-            return View(employees);
+            return employees;
         }
 
         public IActionResult Create()
@@ -70,6 +81,41 @@ namespace EmployeesApp.Controllers
             }
             ViewBag.Departments = this._context.Departments.ToList();
             return View("Create",model);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Employee emp = this._context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
+            if (emp != null)
+            {
+                _context.Employees.Remove(emp);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        private List<Employee> SortEmployees(List<Employee> employees, string sortField, string currentSortField, SortDirection sortDirection)
+        {
+            if (string.IsNullOrEmpty(sortField))
+            {
+                ViewBag.SortField = "EmployeeNumber";
+                ViewBag.SortDirection = SortDirection.Ascending;
+            }
+            else
+            {
+                if (currentSortField == sortField)
+                    ViewBag.SortDirection = sortDirection == SortDirection.Ascending ? SortDirection.Descending : SortDirection.Ascending;
+                else
+                    ViewBag.SortDirection = SortDirection.Ascending;
+                ViewBag.SortField = sortField;
+            }
+
+            var propertyInfo = typeof(Employee).GetProperty(ViewBag.SortField);
+            if(ViewBag.SortDirection == SortDirection.Ascending)
+                employees = employees.OrderBy(e => propertyInfo.GetValue(e,null)).ToList();
+            return employees;
+
+
         }
 
     }
