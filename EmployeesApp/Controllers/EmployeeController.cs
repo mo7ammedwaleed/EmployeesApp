@@ -12,9 +12,11 @@ namespace EmployeesApp.Controllers
     public class EmployeeController : Controller
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index(string sortField, string currentSortField, SortDirection sortDirection)
+        public IActionResult Index(string sortField, string currentSortField, SortDirection sortDirection, string searchByName)
         {
             var employees = GetEmployees();
+            if (!string.IsNullOrEmpty(searchByName))
+                employees = employees.Where(e => e.EmployeeName.ToLower().Contains(searchByName.ToLower())).ToList();
             return View(this.SortEmployees(employees, sortField, currentSortField, sortDirection));
         }
 

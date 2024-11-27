@@ -5,9 +5,15 @@
 
 <h1>All Employees</h1>
 
-<hr />
+@using (Html.BeginForm())
+{
+	<div class="input-group">
+		@Html.TextBox("SearchByName",null,new{ @class="form-control", placeholder = "Search By Name...."})
+		<input type="submit" value="Search" class="btn btn-outline-success"/>
+		<a asp-action="Create" class="btn btn-outline-primary">Create New Employee</a>
+	</div>
+}
 
-<a asp-action="Create" class="btn btn-primary">Create New Employee</a>
 
 <table class="table">
     <thead>
